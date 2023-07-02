@@ -1,41 +1,63 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import axios from "axios";
 import { UilSignOutAlt } from "@iconscout/react-unicons";
 import { UilBars } from "@iconscout/react-unicons";
 import { SidebarData } from "../Data/Data";
-import './sidebar.css';
+import "./sidebar.css";
 
 export default function Sidebar() {
   const [expanded, setExpanded] = useState(true);
   const location = useLocation();
-
-  const sidebarVariants = {
-    true: {
-      left: '0'
-    },
-    false: {
-      left: '-60%'
-    }
-  };
+  const navigate = useNavigate();
 
   const handleToggleExpand = () => {
     setExpanded(!expanded);
   };
 
+  const handleSignOut = async () => {
+    try {
+      // Send a request to the backend's logout endpoint
+      await axios.post("http://localhost:3333/users/logout");
+
+      // Remove tokens or authentication data from localStorage
+      localStorage.removeItem("access_token");
+      localStorage.removeItem("refreshToken");
+
+      // Navigate to the login page
+      navigate("/login");
+    } catch (error) {
+      console.error("Logout failed:", error);
+    }
+  };
+
+  const sidebarVariants = {
+    expanded: {
+      left: "0",
+    },
+    collapsed: {
+      left: "-60%",
+    },
+  };
+
   return (
     <>
-      <div className="bars" style={expanded ? { left: '60%' } : { left: '5%' }} onClick={handleToggleExpand}>
+      <div
+        className="bars"
+        style={expanded ? { left: "60%" } : { left: "5%" }}
+        onClick={handleToggleExpand}
+      >
         <UilBars />
       </div>
       <motion.div
-        className='sidebar'
+        className="sidebar"
         variants={sidebarVariants}
-        animate={window.innerWidth <= 768 ? `${expanded}` : ''}
+        animate={expanded ? "expanded" : "collapsed"}
       >
         {/* logo */}
         <div className="logo">
-          <img src='./images/login.jpg' alt="logo" />
+          <img src="./images/login.jpg" alt="logo" />
           <span>
             Sh<span>o</span>ps
           </span>
@@ -62,9 +84,9 @@ export default function Sidebar() {
             );
           })}
           {/* signoutIcon */}
-          <div className="menuItem">
+          <div className="menuItem" onClick={handleSignOut}>
             <Link to="/login">
-            <UilSignOutAlt />
+              <UilSignOutAlt />
             </Link>
           </div>
         </div>
@@ -72,6 +94,7 @@ export default function Sidebar() {
     </>
   );
 }
+
 
 
 

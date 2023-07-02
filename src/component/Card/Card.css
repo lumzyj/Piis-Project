@@ -1,3 +1,29 @@
+.AccountNumberCard {
+    width: auto;
+    height: 150px;
+    border-radius: 8px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  
+  .accountNumber {
+    text-align: left;
+  }
+  
+  .accountNumber h3 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: bold;
+    color: #ffffff;
+  }
+  
+  .accountNumber span {
+    font-size: 24px;
+    font-weight: bold;
+  }
+  
 .CompactCard {
     display: flex;
     flex: 1;
@@ -19,7 +45,9 @@
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
-    gap: 1rem;
+    gap: 3rem;
+    margin-top: 80px;
+    margin-left: -150px;
   }
   
   .CompactCard .CircularProgressbar {

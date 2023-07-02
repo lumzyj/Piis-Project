@@ -13,8 +13,7 @@ const Cards = () => {
               param={{
                 title: card.title,
                 color: card.color,
-                barValue: card.barValue,
-                value: card.value,
+                // value: card.value,
                 png: card.png,
               }}
             />
